@@ -51,6 +51,7 @@ jobs:
           dotnet build --no-restore --configuration Release
 
       - name: Test
+        working-directory: ./Tests
         run: |        
           dotnet test --no-build --no-restore --configuration Release --logger trx --results-directory "TestResults"
 
