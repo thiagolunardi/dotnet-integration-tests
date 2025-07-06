@@ -29,6 +29,9 @@ jobs:
           SA_PASSWORD: ${{ secrets.TEST_DB_SA_PASSWORD }}
         options: --health-cmd="exit 0" --health-interval=10s --health-timeout=5s --health-retries=3
 
+    env:
+        ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=TodoItems.Test;User Id=sa;Password=${{ secrets.TEST_DB_SA_PASSWORD }};TrustServerCertificate=True;"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,14 +49,6 @@ jobs:
       - name: Build
         run: |
           dotnet build --no-restore --configuration Release
-
-      - name: Wait for SQL Server
-        run: |
-          echo "Waiting for SQL Server to be ready..."
-          while ! nc -z localhost 1433; do
-            sleep 1
-          done
-          echo "SQL Server is ready."
 
       - name: Test
         run: |        
