@@ -48,12 +48,11 @@ jobs:
 
       - name: Build
         run: |
-          dotnet build --no-restore --configuration Release
+          dotnet build --no-restore
 
       - name: Test
-        working-directory: ./Tests
         run: |        
-          dotnet test --no-build --no-restore --configuration Release --logger trx --results-directory "TestResults"
+          dotnet test --no-build --no-restore --logger trx --results-directory "TestResults"
 
       - uses: actions/upload-artifact@v4
         with:
