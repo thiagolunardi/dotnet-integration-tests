@@ -7,9 +7,9 @@ public static class TestConfigurationAccessor
     static TestConfigurationAccessor()
     {
         var configuration = new ConfigurationBuilder()
+            .AddEnvironmentVariables()
             .AddJsonFile("appsettings.json", optional: true)
             .AddJsonFile("appsettings.Test.json", optional: true)
-            .AddEnvironmentVariables()
             .Build();
 
         ConnectionString = configuration.GetConnectionString("DefaultConnection")!;
