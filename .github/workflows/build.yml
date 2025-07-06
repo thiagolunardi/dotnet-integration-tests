@@ -28,7 +28,7 @@ jobs:
         with:
           dotnet-version: '9.x'
           cache: true
-          cache-dependency-path: ./src/**/packages.lock.json
+          cache-dependency-path: ./**/packages.lock.json
 
       - name: Restore
         run: |
