@@ -18,6 +18,16 @@ jobs:
   backend-build-and-test:
     runs-on: ubuntu-latest
     name: Backend Build and Test
+    
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+          - 1433:1433
+        env:
+          ACCEPT_EULA: "Y"
+          SA_PASSWORD: ${{ secrets.TEST_DB_SA_PASSWORD }}
+        options: --health-cmd="exit 0" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout code
@@ -37,8 +47,16 @@ jobs:
         run: |
           dotnet build --no-restore --configuration Release
 
-      - name: Test
+      - name: Wait for SQL Server
         run: |
+          echo "Waiting for SQL Server to be ready..."
+          while ! nc -z localhost 1433; do
+            sleep 1
+          done
+          echo "SQL Server is ready."
+
+      - name: Test
+        run: |        
           dotnet test --no-build --no-restore --configuration Release --logger trx --results-directory "TestResults"
 
       - uses: actions/upload-artifact@v4
