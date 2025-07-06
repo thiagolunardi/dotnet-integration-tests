@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>IntegrationTests.Database</AssemblyName>
+        <RootNamespace>IntegrationTests.Database</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="IntegrationTests.Models" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Models\Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="dbup-sqlserver" />
+      <PackageReference Include="Microsoft.Data.SqlClient" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="MigrationScripts\*.sql" />
+        <None Remove="MigrationScripts\*.sql" />
+    </ItemGroup>
+    
+    <Target Name="copyconfig" AfterTargets="Build" Condition="$(ConfigurationName) == Debug">
+        <Copy SourceFiles="$(ProjectDir)..\.config\appsettings.Development.json" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+    </Target>
+
+</Project>
+
+
+
+        

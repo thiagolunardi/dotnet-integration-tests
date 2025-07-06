@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>IntegrationTests.WebApi</AssemblyName>
+    <RootNamespace>IntegrationTests.WebApi</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="IntegrationTests.Models" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+  </ItemGroup>
+
+  <Target Name="copyconfig" AfterTargets="Build" Condition="$(ConfigurationName) == Debug">
+    <Copy SourceFiles="$(ProjectDir)\..\.config\appsettings.Development.json" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+  </Target>
+
+</Project>
