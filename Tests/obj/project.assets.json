@@ -4359,11 +4359,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\thiagolunardi\\IntegrationTests\\Tests\\Tests.csproj",
+      "projectUniqueName": "D:\\thiagolunardi\\dotnet-integration-tests\\Tests\\Tests.csproj",
       "projectName": "IntegrationTests.Tests",
-      "projectPath": "D:\\thiagolunardi\\IntegrationTests\\Tests\\Tests.csproj",
+      "projectPath": "D:\\thiagolunardi\\dotnet-integration-tests\\Tests\\Tests.csproj",
       "packagesPath": "D:\\.nuget\\cache",
-      "outputPath": "D:\\thiagolunardi\\IntegrationTests\\Tests\\obj\\",
+      "outputPath": "D:\\thiagolunardi\\dotnet-integration-tests\\Tests\\obj\\",
       "projectStyle": "PackageReference",
       "centralPackageVersionsManagementEnabled": true,
       "configFilePaths": [
@@ -4379,11 +4379,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\thiagolunardi\\IntegrationTests\\Database\\Database.csproj": {
-              "projectPath": "D:\\thiagolunardi\\IntegrationTests\\Database\\Database.csproj"
+            "D:\\thiagolunardi\\dotnet-integration-tests\\Database\\Database.csproj": {
+              "projectPath": "D:\\thiagolunardi\\dotnet-integration-tests\\Database\\Database.csproj"
             },
-            "D:\\thiagolunardi\\IntegrationTests\\WebApi\\WebApi.csproj": {
-              "projectPath": "D:\\thiagolunardi\\IntegrationTests\\WebApi\\WebApi.csproj"
+            "D:\\thiagolunardi\\dotnet-integration-tests\\WebApi\\WebApi.csproj": {
+              "projectPath": "D:\\thiagolunardi\\dotnet-integration-tests\\WebApi\\WebApi.csproj"
             }
           }
         }
@@ -4392,6 +4392,10 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreLockProperties": {
+        "restorePackagesWithLockFile": "true",
+        "nuGetLockFilePath": ""
       },
       "restoreAuditProperties": {
         "enableAudit": "true",

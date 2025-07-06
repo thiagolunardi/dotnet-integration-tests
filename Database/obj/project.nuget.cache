@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5v0djLsFPuY=",
+  "dgSpecHash": "u+rywyB/u0o=",
   "success": true,
-  "projectFilePath": "D:\\thiagolunardi\\IntegrationTests\\Database\\Database.csproj",
+  "projectFilePath": "D:\\thiagolunardi\\dotnet-integration-tests\\Database\\Database.csproj",
   "expectedPackageFiles": [
     "D:\\.nuget\\cache\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "D:\\.nuget\\cache\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

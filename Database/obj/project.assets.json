@@ -2410,11 +2410,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\thiagolunardi\\IntegrationTests\\Database\\Database.csproj",
+      "projectUniqueName": "D:\\thiagolunardi\\dotnet-integration-tests\\Database\\Database.csproj",
       "projectName": "IntegrationTests.Database",
-      "projectPath": "D:\\thiagolunardi\\IntegrationTests\\Database\\Database.csproj",
+      "projectPath": "D:\\thiagolunardi\\dotnet-integration-tests\\Database\\Database.csproj",
       "packagesPath": "D:\\.nuget\\cache",
-      "outputPath": "D:\\thiagolunardi\\IntegrationTests\\Database\\obj\\",
+      "outputPath": "D:\\thiagolunardi\\dotnet-integration-tests\\Database\\obj\\",
       "projectStyle": "PackageReference",
       "centralPackageVersionsManagementEnabled": true,
       "configFilePaths": [
@@ -2430,8 +2430,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\thiagolunardi\\IntegrationTests\\Models\\Models.csproj": {
-              "projectPath": "D:\\thiagolunardi\\IntegrationTests\\Models\\Models.csproj"
+            "D:\\thiagolunardi\\dotnet-integration-tests\\Models\\Models.csproj": {
+              "projectPath": "D:\\thiagolunardi\\dotnet-integration-tests\\Models\\Models.csproj"
             }
           }
         }
@@ -2440,6 +2440,10 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreLockProperties": {
+        "restorePackagesWithLockFile": "true",
+        "nuGetLockFilePath": ""
       },
       "restoreAuditProperties": {
         "enableAudit": "true",
@@ -2478,7 +2482,8 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.6",
           "Microsoft.Extensions.Configuration.Json": "9.0.6",
           "Microsoft.NET.Test.Sdk": "17.14.1",
-          "xunit": "2.9.3"
+          "xunit": "2.9.3",
+          "Xunit.Extensions.AssemblyFixture": "2.6.0"
         },
         "imports": [
           "net461",

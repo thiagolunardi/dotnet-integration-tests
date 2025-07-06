@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IntegrationTests.Database")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+114017635d62aed10f6f6a2a67c8404556234e37")]
 [assembly: System.Reflection.AssemblyProductAttribute("IntegrationTests.Database")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IntegrationTests.Database")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
