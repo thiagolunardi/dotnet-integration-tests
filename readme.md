@@ -1,4 +1,5 @@
 ﻿# .NET Integration Tests Samples
+[![Build Project](https://github.com/thiagolunardi/dotnet-integration-tests/actions/workflows/build.yml/badge.svg)](https://github.com/thiagolunardi/dotnet-integration-tests/actions/workflows/build.yml)
 
 A curated collection of **.NET 9+** integration test samples — showcasing best practices for testing common backend scenarios.
 
