@@ -1,8 +1,8 @@
 <Solution>
   <Folder Name="/Solution Items/" />
   <Folder Name="/Solution Items/.config/">
-    <File Path="../.config\appsettings.Development.json" />
-    <File Path="../.config\appsettings.Test.json" />
+    <File Path=".config\appsettings.Development.json" />
+    <File Path=".config\appsettings.Test.json" />
   </Folder>
   <Folder Name="/Solution Items/.github/">
     <File Path="../.github\workflows\build.yml" />
