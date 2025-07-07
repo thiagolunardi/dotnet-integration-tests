@@ -4,7 +4,9 @@
     <File Path=".config\appsettings.Development.json" />
     <File Path=".config\appsettings.Test.json" />
   </Folder>
+  <Project Path="Contracts\Contracts.csproj" Type="Classic C#" />
   <Project Path="Database\Database.csproj" Type="Classic C#" />
+  <Project Path="MessageProcessor\MessageProcessor.csproj" Type="Classic C#" />
   <Project Path="Models\Models.csproj" Type="Classic C#" />
   <Project Path="Tests/Tests.csproj" Type="C#" />
   <Project Path="WebApi\WebApi.csproj" Type="C#" />

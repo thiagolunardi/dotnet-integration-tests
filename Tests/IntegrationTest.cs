@@ -1,56 +1,47 @@
-﻿using IntegrationTests.Models;
+﻿using IntegrationTests.MessageProcessor;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Models;
+using Microsoft.Extensions.Hosting;
 using Xunit.Extensions.AssemblyFixture;
 
 namespace IntegrationTests.Tests;
 
-public abstract class TodoIntegrationTest(WebApplicationFactory<Program> factory) : IntegrationTest(factory)
+public abstract class IntegrationTest
+    : IClassFixture<WebApplicationFactory<Program>>,
+        IClassFixture<MessageProcessorFactory>,
+        IAssemblyFixture<TestDatabaseCollectionFixture>,
+        IAsyncLifetime
 {
-    protected async Task AddItems(params TodoItem[] todoItems)
-    {
-        await ExecuteInScope<TodoContext>(async ctx =>
-        {
-            foreach (var todoItem in todoItems)
-            {
-                ctx.TodoItems.Add(todoItem);
-            }
+    private readonly WebApplicationFactory<Program> _webApiFactory = new();
+    private readonly IHost _messageProcessorHost = new MessageProcessorFactory().CreateHost();
 
-            await ctx.SaveChangesAsync();
-        });
-    }
-    
-    protected Task<TodoItem[]> GetTodoItems()
-    {
-        return ExecuteInScope<TodoContext, TodoItem[]>(ctx=> ctx.TodoItems.ToArrayAsync());
-    }
-}
+    protected HttpClient HttpClient = null!;
+    protected IServiceProvider WebApiServiceProvider => _webApiFactory.Services;
+    protected IServiceProvider MessageProcessorServiceProvider => _messageProcessorHost.Services;
 
-public abstract class IntegrationTest : 
-    IClassFixture<WebApplicationFactory<Program>>,
-    IAssemblyFixture<TestDatabaseCollectionFixture>
-{
-    private readonly WebApplicationFactory<Program> _factory;
-    protected readonly HttpClient HttpClient;
-
-    protected IntegrationTest(WebApplicationFactory<Program> factory)
+    public async Task InitializeAsync()
     {
-        _factory = factory;
-        HttpClient = _factory.CreateClient();
+        await _messageProcessorHost.StartAsync();
+        HttpClient = new WebApplicationFactory<Program>().CreateClient();
     }
-    
+
+    public async Task DisposeAsync()
+    {
+        await _messageProcessorHost.StopAsync();
+        await _webApiFactory.DisposeAsync();
+    }
+
     protected async Task ExecuteInScope<T>(Func<T, Task> action) where T : notnull
     {
-        await using var scope = _factory.Services.CreateAsyncScope();
+        await using var scope = _webApiFactory.Services.CreateAsyncScope();
         var service = scope.ServiceProvider.GetRequiredService<T>();
         await action(service);
     }
-    
-    protected async Task<TResult> ExecuteInScope<TService, TResult>(Func<TService, Task<TResult>> action) where TService : notnull
+
+    protected async Task<TResult> ExecuteInScope<TService, TResult>(Func<TService, Task<TResult>> action)
+        where TService : notnull
     {
-        await using var scope = _factory.Services.CreateAsyncScope();
+        await using var scope = _webApiFactory.Services.CreateAsyncScope();
         var service = scope.ServiceProvider.GetRequiredService<TService>();
         return await action(service);
     }

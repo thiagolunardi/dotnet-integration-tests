@@ -1,4 +1,6 @@
 using System.Reflection;
+using IntegrationTests.Contracts;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Models;
 
@@ -15,7 +17,13 @@ builder.Configuration
     .AddJsonFile("appsettings.Test.json", optional: true);
 
 builder.Services.AddDbContext<TodoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddOptions<RabbitMqTransportOptions>(nameof(RabbitMqTransportOptions))
+    .Bind(builder.Configuration.GetSection(nameof(RabbitMqTransportOptions)))
+    .ValidateDataAnnotations();
+
+builder.Services.AddMassTransit(busRegistration => busRegistration.UsingRabbitMq());
 
 var app = builder.Build();
 
@@ -57,23 +65,13 @@ app.MapPost("/api/todo", async (TodoItem todoItem, TodoContext context) =>
     return Results.Created($"/api/todo/{todoItem.Id}", todoItem);
 });
 
-app.MapPut("/api/todo/{id}", async (long id, TodoItem todoItem, TodoContext context) =>
+app.MapPut("/api/todo/{id}", async (long id, TodoItem todoItem, TodoContext context, IBus bus) =>
 {
     if (id != todoItem.Id)
         return Results.BadRequest();
 
-    context.Entry(todoItem).State = EntityState.Modified;
-
-    try
-    {
-        await context.SaveChangesAsync();
-    }
-    catch (DbUpdateConcurrencyException)
-    {
-        if (!context.TodoItems.Any(e => e.Id == id))
-            return Results.NotFound();
-        throw;
-    }
+    // Publish an event to the message bus
+    await bus.Publish(new MarkAsCompletedCommand(todoItem.Id));
 
     return Results.NoContent();
 });

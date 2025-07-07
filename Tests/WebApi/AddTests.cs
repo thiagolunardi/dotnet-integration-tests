@@ -1,11 +1,9 @@
 ﻿using System.Net.Http.Json;
 using IntegrationTests.Models;
-using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace IntegrationTests.Tests.TodoTests;
+namespace IntegrationTests.Tests.WebApi;
 
-public class AddTests(WebApplicationFactory<Program> factory)
-    : TodoIntegrationTest(factory)
+public class AddTests : TodoIntegrationTest
 {
     [Fact]
     public async Task AddItem_Success()
@@ -23,8 +21,7 @@ public class AddTests(WebApplicationFactory<Program> factory)
         // Assert
         response.EnsureSuccessStatusCode();
 
-        var todoItems = await GetTodoItems();
-        var addedItem = todoItems.SingleOrDefault(item => item.Name == itemName);
+        var addedItem = await GetTodoItem(itemName);
         Assert.NotNull(addedItem);
         Assert.Equal(itemName, addedItem.Name);
         Assert.False(addedItem.IsComplete);
