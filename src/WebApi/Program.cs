@@ -71,7 +71,8 @@ app.MapPut("/api/todo/{id}", async (long id, TodoItem todoItem, TodoContext cont
         return Results.BadRequest();
 
     // Publish an event to the message bus
-    await bus.Publish(new MarkAsCompletedCommand(todoItem.Id));
+    var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+    await bus.Publish(new MarkAsCompletedCommand(todoItem.Id), cancellationToken.Token);
 
     return Results.NoContent();
 });

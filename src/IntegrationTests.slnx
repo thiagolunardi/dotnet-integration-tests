@@ -1,11 +1,11 @@
 <Solution>
   <Folder Name="/Solution Items/" />
   <Folder Name="/Solution Items/.config/">
-    <File Path=".config\appsettings.Development.json" />
-    <File Path=".config\appsettings.Test.json" />
+    <File Path="../.config\appsettings.Development.json" />
+    <File Path="../.config\appsettings.Test.json" />
   </Folder>
   <Folder Name="/Solution Items/.github/">
-    <File Path=".github\workflows\build.yml" />
+    <File Path="../.github\workflows\build.yml" />
   </Folder>
   <Project Path="Contracts\Contracts.csproj" Type="Classic C#" />
   <Project Path="Database\Database.csproj" Type="Classic C#" />

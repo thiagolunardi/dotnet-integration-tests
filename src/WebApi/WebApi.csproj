@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <Target Name="copyconfig" AfterTargets="Build" Condition="$(ConfigurationName) == Debug">
-    <Copy SourceFiles="$(ProjectDir)\..\.config\appsettings.Development.json" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+    <Copy SourceFiles="$(ProjectDir)\..\..\.config\appsettings.Development.json" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
   </Target>
 
 </Project>

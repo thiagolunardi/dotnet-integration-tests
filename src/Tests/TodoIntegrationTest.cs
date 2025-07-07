@@ -35,7 +35,8 @@ public abstract class TodoIntegrationTest : IntegrationTest
 
     protected Task Publish(MarkAsCompletedCommand message)
     {
+        var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(3));
         return ExecuteInScope<IBus>(async bus =>
-            await bus.Publish(message));
+            await bus.Publish(message, cancellationToken.Token));
     }
 }
