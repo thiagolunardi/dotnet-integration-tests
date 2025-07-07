@@ -28,6 +28,10 @@ jobs:
           ACCEPT_EULA: "Y"
           SA_PASSWORD: ${{ secrets.TEST_DB_SA_PASSWORD }}
         options: --health-cmd="exit 0" --health-interval=10s --health-timeout=5s --health-retries=3
+      rabbitmq:
+        image: masstransit/rabbitmq
+        ports:
+          - 5672:5672
 
     env:
         ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=TodoItems.Test;User Id=sa;Password=${{ secrets.TEST_DB_SA_PASSWORD }};TrustServerCertificate=True;"
