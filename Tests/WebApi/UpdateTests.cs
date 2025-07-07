@@ -24,27 +24,12 @@ public class UpdateTests : TodoIntegrationTest
 
         // Assert
         response.EnsureSuccessStatusCode();
-        
-        var timeout = TimeSpan.FromSeconds(5);
-        var stopwatch = Stopwatch.StartNew();
-        while (true)
+        await ShouldEventuallyAssert(async () =>
         {
-            try
-            {
-                var updatedItem = await GetTodoItem(newItem.Id);
-                Assert.NotNull(updatedItem);
-                Assert.Equal(itemName, updatedItem.Name);
-                Assert.True(updatedItem.IsComplete);
-            }
-            catch (XunitException)
-            {
-                if (stopwatch.Elapsed > timeout)
-                    throw;
-                
-                await Task.Delay(TimeSpan.FromMilliseconds(150)); // Wait for message processing
-                continue;
-            }
-            break;
-        }
+            var updatedItem = await GetTodoItem(newItem.Id);
+            Assert.NotNull(updatedItem);
+            Assert.Equal(itemName, updatedItem.Name);
+            Assert.True(updatedItem.IsComplete);
+        });
     }
 }

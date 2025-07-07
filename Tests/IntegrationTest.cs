@@ -1,8 +1,10 @@
-﻿using IntegrationTests.MessageProcessor;
+﻿using System.Diagnostics;
+using IntegrationTests.MessageProcessor;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Xunit.Extensions.AssemblyFixture;
+using Xunit.Sdk;
 
 namespace IntegrationTests.Tests;
 
@@ -28,7 +30,6 @@ public abstract class IntegrationTest
     public async Task DisposeAsync()
     {
         await _messageProcessorHost.StopAsync();
-        await _webApiFactory.DisposeAsync();
     }
 
     protected async Task ExecuteInScope<T>(Func<T, Task> action) where T : notnull
@@ -44,5 +45,28 @@ public abstract class IntegrationTest
         await using var scope = _webApiFactory.Services.CreateAsyncScope();
         var service = scope.ServiceProvider.GetRequiredService<TService>();
         return await action(service);
+    }
+
+    protected static async Task ShouldEventuallyAssert(Func<Task> assert, TimeSpan? timeout = null, TimeSpan? interval = null)
+    {
+        timeout ??= TimeSpan.FromSeconds(5);
+        interval ??= TimeSpan.FromMilliseconds(150);
+        var stopwatch = Stopwatch.StartNew();
+        while (true)
+        {
+            try
+            {
+                await assert();
+            }
+            catch (XunitException)
+            {
+                if (stopwatch.Elapsed > timeout.Value)
+                    throw;
+                
+                await Task.Delay(interval.Value);
+                continue;
+            }
+            break;
+        }
     }
 }

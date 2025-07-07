@@ -1,7 +1,5 @@
-﻿using System.Diagnostics;
-using IntegrationTests.Contracts;
+﻿using IntegrationTests.Contracts;
 using IntegrationTests.Models;
-using Xunit.Sdk;
 
 namespace IntegrationTests.Tests.MessageProcessor;
 
@@ -23,27 +21,12 @@ public class MarkAsCompletedHandlerTests : TodoIntegrationTest
         await Publish(message);
 
         // Assert
-        var timeout = TimeSpan.FromSeconds(5);
-        var stopwatch = Stopwatch.StartNew();
-        while (true)
+        await ShouldEventuallyAssert(async () =>
         {
-            try
-            {
-                var updatedItem = await GetTodoItem(message.Id);
-                Assert.NotNull(updatedItem);
-                Assert.Equal(itemName, updatedItem.Name);
-                Assert.True(updatedItem.IsComplete);
-            }
-            catch (XunitException)
-            {
-                if (stopwatch.Elapsed > timeout)
-                    throw;
-
-                await Task.Delay(TimeSpan.FromMilliseconds(150)); // Wait for message processing
-                continue;
-            }
-
-            break;
-        }
+            var updatedItem = await GetTodoItem(message.Id);
+            Assert.NotNull(updatedItem);
+            Assert.Equal(itemName, updatedItem.Name);
+            Assert.True(updatedItem.IsComplete);
+        });
     }
 }
