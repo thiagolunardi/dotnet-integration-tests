@@ -1,10 +1,18 @@
 ﻿name: Build Project
 
-on:
+on:  
   push:
+    paths:
+      - 'global.json'
+      - 'src/**'
+      - '.github/**'
     branches:
       - main
   pull_request:
+    paths:
+      - 'global.json'
+      - 'src/**'
+      - '.github/**'
     branches:
       - main
   workflow_dispatch:
