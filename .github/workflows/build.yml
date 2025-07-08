@@ -41,7 +41,7 @@ jobs:
         ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=TodoItems.Test;User Id=sa;Password=${{ secrets.TEST_DB_SA_PASSWORD }};TrustServerCertificate=True;"
         Logging__LogLevel__Default: "Information"
         EmailClientOptions__Host: "localhost"
-        EmailClientOptions__Port: 1025,
+        EmailClientOptions__Port: 1025
         EmailClientOptions__Sender: "no-reply@localhost.me"
 
     steps:
