@@ -81,9 +81,10 @@ A curated collection of **.NET 9+** integration test samples — showcasing best
 |------------------------------|-------------|
 | SQL Database: SQL Server     | 🟢 Done     |
 | Messaging: RabbitMQ          | 🟢 Done     |
+| Email assertion (Inbox mock) | 🟢 Done     |
 | NoSQL DB (e.g., MongoDB)     | 🟡 Upcoming |
 | Blob Storage (emulator)      | 🟡 Upcoming |
-| Email assertion (Inbox mock) | 🟡 Upcoming |
+
 
 Contributions welcome! Feel free to submit PRs, feature requests or issues.
 
