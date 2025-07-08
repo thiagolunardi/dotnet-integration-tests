@@ -33,7 +33,7 @@ jobs:
         ports:
           - 5672:5672
       mailpit:
-        image: mailpit/mailpit
+        image: axllent/mailpit
         ports:
           - 1025:1025
 
