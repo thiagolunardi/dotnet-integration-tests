@@ -1,7 +1,7 @@
 ﻿using IntegrationTests.Contracts;
+using IntegrationTests.Models;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Models;
 
 namespace IntegrationTests.MessageProcessor.Handlers;
 
@@ -15,7 +15,5 @@ public class MarkAsCompletedHandler(TodoContext todoContext) : IConsumer<MarkAsC
 
         todoItem.IsComplete = true;
         todoContext.TodoItems.Update(todoItem);
-
-        await todoContext.SaveChangesAsync();
     }
 }

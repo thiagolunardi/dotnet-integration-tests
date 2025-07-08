@@ -1,11 +1,13 @@
 ﻿using System.Reflection;
+using IntegrationTests.MessageProcessor.Filters;
 using IntegrationTests.MessageProcessor.Handlers;
+using IntegrationTests.Models;
 using MassTransit;
+using MassTransit.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Models;
 
 namespace IntegrationTests.MessageProcessor;
 
@@ -27,8 +29,7 @@ public class MessageProcessorFactory
             })
             .ConfigureServices((hostContext, services) =>
             {
-                services.AddDbContext<TodoContext>(options =>
-                    options.UseSqlServer(hostContext.Configuration.GetConnectionString("DefaultConnection")));
+                services.AddTodoContext(hostContext.Configuration);
                 
                 services.AddOptions<RabbitMqTransportOptions>(nameof(RabbitMqTransportOptions))
                     .Bind(hostContext.Configuration.GetSection(nameof(RabbitMqTransportOptions)));
@@ -37,7 +38,10 @@ public class MessageProcessorFactory
                 {
                     busRegistration.AddConsumer<MarkAsCompletedHandler>();
                     busRegistration.UsingRabbitMq((busContext, busConfiguration) =>
-                        busConfiguration.ConfigureEndpoints(busContext));
+                    {
+                        busConfiguration.ConfigureEndpoints(busContext);
+                        busConfiguration.UseConsumeFilter(typeof(UnitOfWorkFilter<>), busContext);
+                    });
                 });
             });
     }

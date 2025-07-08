@@ -361,7 +361,8 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "[9.0.6, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[9.0.6, )"
+          "Microsoft.EntityFrameworkCore.SqlServer": "[9.0.6, )",
+          "Microsoft.Extensions.DependencyInjection": "[9.0.6, )"
         }
       },
       "Microsoft.EntityFrameworkCore": {

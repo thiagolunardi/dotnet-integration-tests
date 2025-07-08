@@ -2,7 +2,6 @@ using System.Reflection;
 using IntegrationTests.Contracts;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,79 +15,75 @@ builder.Configuration
     .AddJsonFile("appsettings.Development.json", optional: true)
     .AddJsonFile("appsettings.Test.json", optional: true);
 
-builder.Services.AddDbContext<TodoContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddOptions<RabbitMqTransportOptions>(nameof(RabbitMqTransportOptions))
-    .Bind(builder.Configuration.GetSection(nameof(RabbitMqTransportOptions)))
-    .ValidateDataAnnotations();
+builder.Services.AddTodoContext(builder.Configuration);
 
 builder.Services.AddMassTransit(busRegistration => busRegistration.UsingRabbitMq());
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.MapOpenApi();
 }
-
-// Ingestion middleware
-app.Use(async (context, next) =>
-{
-    Console.WriteLine("Ingestion: Processing request " + context.Request.Path);
-    await next();
-});
-
-// Response middleware (executes after endpoint processing)
-app.Use(async (context, next) =>
-{
-    await next();
-    Console.WriteLine("Return: Processed response with status code " + context.Response.StatusCode);
-});
 
 app.UseHttpsRedirection();
 
 app.MapGet("/api/todo", async (TodoContext context) =>
     await context.TodoItems.ToListAsync());
 
-app.MapGet("/api/todo/{id}", async (long id, TodoContext context) =>
+app.MapGet("/api/todo/{id:long}", async (long id, TodoContext context) =>
 {
     var todoItem = await context.TodoItems.FindAsync(id);
     return todoItem is not null ? Results.Ok(todoItem) : Results.NotFound();
 });
 
-app.MapPost("/api/todo", async (TodoItem todoItem, TodoContext context) =>
+app.MapPost("/api/todo", (TodoItem todoItem, TodoContext context) =>
 {
     context.TodoItems.Add(todoItem);
-    await context.SaveChangesAsync();
-    return Results.Created($"/api/todo/{todoItem.Id}", todoItem);
+    
+    return Task.FromResult(Results.Created($"/api/todo/{todoItem.Id}", todoItem));
 });
 
-app.MapPut("/api/todo/{id}", async (long id, TodoItem todoItem, TodoContext context, IBus bus) =>
+app.MapPut("/api/todo/{id:long}", async (long id, TodoItem todoItem, IBus bus) =>
 {
     if (id != todoItem.Id)
         return Results.BadRequest();
 
-    // Publish an event to the message bus
     var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(3));
     await bus.Publish(new MarkAsCompletedCommand(todoItem.Id), cancellationToken.Token);
 
     return Results.NoContent();
 });
 
-app.MapDelete("/api/todo/{id}", async (long id, TodoContext context) =>
+app.MapDelete("/api/todo/{id:long}", async (long id, TodoContext context) =>
 {
     var todoItem = await context.TodoItems.FindAsync(id);
     if (todoItem == null)
         return Results.NotFound();
 
     context.TodoItems.Remove(todoItem);
-    await context.SaveChangesAsync();
 
     return Results.Ok(todoItem);
 });
 
+app.Use(async (context, next) =>
+{
+    await next();
+    
+    if (context.Request.Method == HttpMethods.Get)
+    {
+        return;
+    }
+
+    if (context.Response.StatusCode is >= 200 and <= 299 or 302)
+    {
+        var cancellationToken = context.Request.HttpContext.RequestAborted;
+        var unitOfWork = context.RequestServices.GetRequiredService<IUnitOfWork>();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+});
+
 app.Run();
 
-public partial class Program { }
+public partial class Program;

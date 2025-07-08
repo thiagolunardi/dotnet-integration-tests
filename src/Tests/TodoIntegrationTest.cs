@@ -2,7 +2,6 @@
 using IntegrationTests.Models;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Models;
 
 namespace IntegrationTests.Tests;
 
