@@ -1,9 +1,6 @@
-namespace IntegrationTests.Models;
+using IntegrationTests.Common;
 
-public interface IUnitOfWork
-{
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-}
+namespace IntegrationTests.Models;
 
 class UnitOfWork(TodoContext context) : IUnitOfWork
 {

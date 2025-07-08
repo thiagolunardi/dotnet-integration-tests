@@ -111,6 +111,15 @@
         "resolved": "8.5.0",
         "contentHash": "Dkc+LudZCkg0HSO9z/WfdO18x4czA82SMkBBrtliBo+gIeXu39/Y8xgPiyN2/3TJ0fbmg6C5w/dBTHXFS2TH6g=="
       },
+      "MassTransit.RabbitMQ": {
+        "type": "Transitive",
+        "resolved": "8.5.0",
+        "contentHash": "JwN6XhEGDmngUX0YucOJYn1CRaSD5jBjpj0cPAVjgzD800QA1CKCvPZh4R49mYbiHNf+ZEzC2vrjps6H1eXdgg==",
+        "dependencies": {
+          "MassTransit": "8.5.0",
+          "RabbitMQ.Client": "7.1.2"
+        }
+      },
       "Microsoft.AspNetCore.TestHost": {
         "type": "Transitive",
         "resolved": "9.0.6",
@@ -213,11 +222,6 @@
           "Microsoft.Extensions.FileProviders.Abstractions": "9.0.6",
           "Microsoft.Extensions.FileProviders.Physical": "9.0.6"
         }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions": {
-        "type": "Transitive",
-        "resolved": "9.0.6",
-        "contentHash": "0Zn6nR/6g+90MxskZyOOMPQvnPnrrGu6bytPwkV+azDcTtCSuQ1+GJUrg8Klmnrjk1i6zMpw2lXijl+tw7Q3kA=="
       },
       "Microsoft.Extensions.DependencyModel": {
         "type": "Transitive",
@@ -649,6 +653,16 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
+      "IntegrationTests.Common": {
+        "type": "Project",
+        "dependencies": {
+          "MassTransit.RabbitMQ": "[8.5.0, )",
+          "Microsoft.Extensions.Configuration": "[9.0.6, )",
+          "Microsoft.Extensions.Configuration.FileExtensions": "[9.0.6, )",
+          "Microsoft.Extensions.Configuration.Json": "[9.0.6, )",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.6, )"
+        }
+      },
       "IntegrationTests.Contracts": {
         "type": "Project"
       },
@@ -666,7 +680,6 @@
         "dependencies": {
           "IntegrationTests.Contracts": "[1.0.0, )",
           "IntegrationTests.Models": "[1.0.0, )",
-          "MassTransit.RabbitMQ": "[8.5.0, )",
           "Microsoft.Extensions.Configuration": "[9.0.6, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[9.0.6, )",
           "Microsoft.Extensions.Configuration.FileExtensions": "[9.0.6, )",
@@ -678,9 +691,9 @@
       "IntegrationTests.Models": {
         "type": "Project",
         "dependencies": {
+          "IntegrationTests.Common": "[1.0.0, )",
           "Microsoft.EntityFrameworkCore": "[9.0.6, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[9.0.6, )",
-          "Microsoft.Extensions.DependencyInjection": "[9.0.6, )"
+          "Microsoft.EntityFrameworkCore.SqlServer": "[9.0.6, )"
         }
       },
       "IntegrationTests.WebApi": {
@@ -688,7 +701,6 @@
         "dependencies": {
           "IntegrationTests.Contracts": "[1.0.0, )",
           "IntegrationTests.Models": "[1.0.0, )",
-          "MassTransit.RabbitMQ": "[8.5.0, )",
           "Microsoft.AspNetCore.OpenApi": "[9.0.6, )"
         }
       },
@@ -700,16 +712,6 @@
         "dependencies": {
           "Microsoft.Data.SqlClient": "5.2.2",
           "dbup-core": "6.0.3"
-        }
-      },
-      "MassTransit.RabbitMQ": {
-        "type": "CentralTransitive",
-        "requested": "[8.5.0, )",
-        "resolved": "8.5.0",
-        "contentHash": "JwN6XhEGDmngUX0YucOJYn1CRaSD5jBjpj0cPAVjgzD800QA1CKCvPZh4R49mYbiHNf+ZEzC2vrjps6H1eXdgg==",
-        "dependencies": {
-          "MassTransit": "8.5.0",
-          "RabbitMQ.Client": "7.1.2"
         }
       },
       "Microsoft.AspNetCore.OpenApi": {
@@ -817,6 +819,12 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.6"
         }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions": {
+        "type": "CentralTransitive",
+        "requested": "[9.0.6, )",
+        "resolved": "9.0.6",
+        "contentHash": "0Zn6nR/6g+90MxskZyOOMPQvnPnrrGu6bytPwkV+azDcTtCSuQ1+GJUrg8Klmnrjk1i6zMpw2lXijl+tw7Q3kA=="
       },
       "Microsoft.Extensions.Hosting": {
         "type": "CentralTransitive",

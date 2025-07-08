@@ -1,7 +1,6 @@
 using MassTransit;
-using IntegrationTests.Models;
 
-namespace IntegrationTests.MessageProcessor.Filters;
+namespace IntegrationTests.Common.Filters;
 
 public class UnitOfWorkFilter<T> 
     : IFilter<ConsumeContext<T>> where T : class

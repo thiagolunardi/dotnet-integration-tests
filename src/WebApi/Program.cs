@@ -1,4 +1,4 @@
-using System.Reflection;
+using IntegrationTests.Common;
 using IntegrationTests.Contracts;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -8,16 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddOpenApi();
 
-var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-builder.Configuration
-    .SetBasePath(basePath)
-    .AddJsonFile("appsettings.json", optional: true)
-    .AddJsonFile("appsettings.Development.json", optional: true)
-    .AddJsonFile("appsettings.Test.json", optional: true);
+builder.Configuration.AddAppSettings();
 
 builder.Services.AddTodoContext(builder.Configuration);
 
-builder.Services.AddMassTransit(busRegistration => busRegistration.UsingRabbitMq());
+builder.Services.AddMessageProducerSettings();
 
 var app = builder.Build();
 

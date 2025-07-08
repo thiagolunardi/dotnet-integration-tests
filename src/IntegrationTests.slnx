@@ -9,6 +9,7 @@
   <Folder Name="/Solution Items/.github/">
     <File Path="../.github\workflows\build.yml" />
   </Folder>
+  <Project Path="Common\Common.csproj" Type="Classic C#" />
   <Project Path="Contracts\Contracts.csproj" Type="Classic C#" />
   <Project Path="Database\Database.csproj" Type="Classic C#" />
   <Project Path="MessageProcessor\MessageProcessor.csproj" Type="Classic C#" />

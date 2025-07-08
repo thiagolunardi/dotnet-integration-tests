@@ -2,16 +2,6 @@
   "version": 2,
   "dependencies": {
     "net9.0": {
-      "MassTransit.RabbitMQ": {
-        "type": "Direct",
-        "requested": "[8.5.0, )",
-        "resolved": "8.5.0",
-        "contentHash": "JwN6XhEGDmngUX0YucOJYn1CRaSD5jBjpj0cPAVjgzD800QA1CKCvPZh4R49mYbiHNf+ZEzC2vrjps6H1eXdgg==",
-        "dependencies": {
-          "MassTransit": "8.5.0",
-          "RabbitMQ.Client": "7.1.2"
-        }
-      },
       "Microsoft.Extensions.Configuration": {
         "type": "Direct",
         "requested": "[9.0.6, )",
@@ -143,6 +133,15 @@
         "resolved": "8.5.0",
         "contentHash": "Dkc+LudZCkg0HSO9z/WfdO18x4czA82SMkBBrtliBo+gIeXu39/Y8xgPiyN2/3TJ0fbmg6C5w/dBTHXFS2TH6g=="
       },
+      "MassTransit.RabbitMQ": {
+        "type": "Transitive",
+        "resolved": "8.5.0",
+        "contentHash": "JwN6XhEGDmngUX0YucOJYn1CRaSD5jBjpj0cPAVjgzD800QA1CKCvPZh4R49mYbiHNf+ZEzC2vrjps6H1eXdgg==",
+        "dependencies": {
+          "MassTransit": "8.5.0",
+          "RabbitMQ.Client": "7.1.2"
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces": {
         "type": "Transitive",
         "resolved": "1.1.1",
@@ -235,11 +234,6 @@
           "Microsoft.Extensions.FileProviders.Abstractions": "9.0.6",
           "Microsoft.Extensions.FileProviders.Physical": "9.0.6"
         }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions": {
-        "type": "Transitive",
-        "resolved": "9.0.6",
-        "contentHash": "0Zn6nR/6g+90MxskZyOOMPQvnPnrrGu6bytPwkV+azDcTtCSuQ1+GJUrg8Klmnrjk1i6zMpw2lXijl+tw7Q3kA=="
       },
       "Microsoft.Extensions.Diagnostics": {
         "type": "Transitive",
@@ -683,15 +677,25 @@
           "System.Drawing.Common": "6.0.0"
         }
       },
+      "IntegrationTests.Common": {
+        "type": "Project",
+        "dependencies": {
+          "MassTransit.RabbitMQ": "[8.5.0, )",
+          "Microsoft.Extensions.Configuration": "[9.0.6, )",
+          "Microsoft.Extensions.Configuration.FileExtensions": "[9.0.6, )",
+          "Microsoft.Extensions.Configuration.Json": "[9.0.6, )",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.6, )"
+        }
+      },
       "IntegrationTests.Contracts": {
         "type": "Project"
       },
       "IntegrationTests.Models": {
         "type": "Project",
         "dependencies": {
+          "IntegrationTests.Common": "[1.0.0, )",
           "Microsoft.EntityFrameworkCore": "[9.0.6, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[9.0.6, )",
-          "Microsoft.Extensions.DependencyInjection": "[9.0.6, )"
+          "Microsoft.EntityFrameworkCore.SqlServer": "[9.0.6, )"
         }
       },
       "Microsoft.Data.SqlClient": {
@@ -753,6 +757,12 @@
           "Microsoft.Extensions.Configuration.FileExtensions": "9.0.6",
           "Microsoft.Extensions.FileProviders.Abstractions": "9.0.6"
         }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions": {
+        "type": "CentralTransitive",
+        "requested": "[9.0.6, )",
+        "resolved": "9.0.6",
+        "contentHash": "0Zn6nR/6g+90MxskZyOOMPQvnPnrrGu6bytPwkV+azDcTtCSuQ1+GJUrg8Klmnrjk1i6zMpw2lXijl+tw7Q3kA=="
       }
     }
   }
