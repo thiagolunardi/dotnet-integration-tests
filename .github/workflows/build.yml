@@ -32,6 +32,10 @@ jobs:
         image: masstransit/rabbitmq
         ports:
           - 5672:5672
+      mailpit:
+        image: mailpit/mailpit
+        ports:
+          - 1025:1025
 
     env:
         ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=TodoItems.Test;User Id=sa;Password=${{ secrets.TEST_DB_SA_PASSWORD }};TrustServerCertificate=True;"
