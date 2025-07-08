@@ -1,4 +1,4 @@
-﻿using IntegrationTests.Common;
+﻿using IntegrationTests.Common.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

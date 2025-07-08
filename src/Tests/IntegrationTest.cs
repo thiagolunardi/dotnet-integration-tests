@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using IntegrationTests.MessageProcessor;
+using IntegrationTests.Tests.Common.Mailpit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +13,7 @@ public abstract class IntegrationTest
     : IClassFixture<WebApplicationFactory<Program>>,
         IClassFixture<MessageProcessorFactory>,
         IAssemblyFixture<TestDatabaseCollectionFixture>,
+        IAssemblyFixture<TestMailboxCollectionFixture>,
         IAsyncLifetime
 {
     private readonly WebApplicationFactory<Program> _webApiFactory = new();
@@ -20,6 +22,8 @@ public abstract class IntegrationTest
     protected HttpClient HttpClient = null!;
     protected IServiceProvider WebApiServiceProvider => _webApiFactory.Services;
     protected IServiceProvider MessageProcessorServiceProvider => _messageProcessorHost.Services;
+
+    protected readonly MailpitApi MailpitApi = new();
 
     public async Task InitializeAsync()
     {
@@ -47,7 +51,8 @@ public abstract class IntegrationTest
         return await action(service);
     }
 
-    protected static async Task ShouldEventuallyAssert(Func<Task> assert, TimeSpan? timeout = null, TimeSpan? interval = null)
+    protected static async Task ShouldEventuallyAssert(Func<Task> assert, TimeSpan? timeout = null,
+        TimeSpan? interval = null)
     {
         timeout ??= TimeSpan.FromSeconds(5);
         interval ??= TimeSpan.FromMilliseconds(150);
@@ -62,10 +67,11 @@ public abstract class IntegrationTest
             {
                 if (stopwatch.Elapsed > timeout.Value)
                     throw;
-                
+
                 await Task.Delay(interval.Value);
                 continue;
             }
+
             break;
         }
     }

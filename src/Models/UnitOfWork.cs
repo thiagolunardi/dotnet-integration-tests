@@ -1,4 +1,4 @@
-using IntegrationTests.Common;
+using IntegrationTests.Common.Settings;
 
 namespace IntegrationTests.Models;
 

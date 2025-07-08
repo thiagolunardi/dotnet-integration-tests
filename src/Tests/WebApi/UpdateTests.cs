@@ -1,7 +1,5 @@
-﻿using System.Diagnostics;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using IntegrationTests.Models;
-using Xunit.Sdk;
 
 namespace IntegrationTests.Tests.WebApi;
 

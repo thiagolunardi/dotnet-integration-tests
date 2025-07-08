@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.Configuration;
 
-namespace IntegrationTests.Common;
+namespace IntegrationTests.Common.Settings;
 
 public static class ConfigurationExtensions
 {
@@ -14,9 +14,4 @@ public static class ConfigurationExtensions
             .AddJsonFile("appsettings.Development.json", optional: true)
             .AddJsonFile("appsettings.Test.json", optional: true);
     }
-}
-
-public interface IUnitOfWork
-{
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

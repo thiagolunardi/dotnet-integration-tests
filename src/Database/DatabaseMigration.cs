@@ -1,3 +1,3 @@
 ﻿namespace IntegrationTests.Database;
 
-public record DatabaseMigration();
+public record DatabaseMigration;

@@ -34,23 +34,34 @@ A curated collection of **.NET 9+** integration test samples — showcasing best
 └── .github/ # CI workflows (GitHub Actions + Docker support)
 ```
 
-
 ---
 
 ## 🧪 How to Run
 
 1. Start **Docker** for dependency services:
    1. SQL Server: 
-      ```bash
-      docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Str0ng!Database?P@ssword0" \
-        -p 1433:1433 --name sqlserver --hostname sqlserver \
+      ```powershell
+      docker run --name sqlserver `
+        -p 1433:1433 --hostname sqlserver `
+        -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Str0ng!Database?P@ssword0" `
         -d mcr.microsoft.com/mssql/server:2022-latest
       ``` 
    1. RabbitMQ:
-      ```bash
-      docker run -p 15672:15672 -p 5672:5672 masstransit/rabbitmq
+      ```powershell
+      docker run --name rabbitmq `
+        -p 15672:15672 -p 5672:5672 `
+        -d masstransit/rabbitmq
       ``` 
-1. Use `dotnet test` to run all tests (unit + integration).
+      
+   1. Mailpit:
+      ```powershell
+      docker run --name mailpit `
+        -p 8025:8025 -p 1025:1025 `
+        --restart unless-stopped `         
+        -d axllent/mailpit      
+      ```
+
+1. Use `dotnet test` to run all tests.
 
 ---
 

@@ -3,6 +3,7 @@ using IntegrationTests.Database;
 
 namespace IntegrationTests.Tests;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class TestDatabaseCollectionFixture
 {
     public TestDatabaseCollectionFixture()

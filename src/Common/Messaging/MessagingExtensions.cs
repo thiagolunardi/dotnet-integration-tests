@@ -1,9 +1,9 @@
 using System.Reflection;
-using IntegrationTests.Common.Filters;
+using IntegrationTests.Common.Messaging.Filters;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IntegrationTests.Common;
+namespace IntegrationTests.Common.Messaging;
 
 public static class MessagingExtensions
 {

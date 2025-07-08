@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
-using IntegrationTests.Common;
+using IntegrationTests.Common.Messaging;
+using IntegrationTests.Common.Settings;
 using IntegrationTests.Models;
 using Microsoft.Extensions.Hosting;
 
