@@ -10,13 +10,16 @@ A curated collection of **.NET 9+** integration test samples — showcasing best
 1. **ASP.NET Core WebAPI**  
    Showcase `WebApplicationFactory` and HTTP client testing to validate controllers, routes, status codes, and headers.
 
-2. **SQL Server Integration**  
-   Run real DB tests via Docker-based SQL Server or EF Core, replacing live DB context using `ConfigureServices`.
+1. **SQL Server Integration**  
+   Run real DB tests via Docker-based SQL Server, including database migrations.
 
-3. **RabbitMQ Message Queues**  
-   Set up RabbitMQ via Testcontainers and perform message-driven assertions.
+1. **RabbitMQ Message Queues**  
+   Set up RabbitMQ and perform message-driven assertions.
 
-4. **Planned Additions**
+1. **Email Assertions**  
+   Use Mailpit to mock SMTP servers and validate email sending in tests.
+
+1. **Planned Additions**
     - NoSQL database (e.g., MongoDB)
     - Blob storage (local or Azure emulator)
     - Email assertion (via SMTP mock server)
@@ -26,11 +29,15 @@ A curated collection of **.NET 9+** integration test samples — showcasing best
 ## 📂 Repository Structure
 ```bash
 .
-├── src/ # Sample applications (WebAPI, background workers...)
-├── tests/
-│ ├── WebApi.Tests/ # xUnit + TestServer + SQL Server + RabbitMQ
-│ └── ... # Future tests: NoSQL, blob storage, email
-├── docs/ # Resources, links & best practices
+├── src/ # Source code folder (WebAPI, database, models, message workers...)
+│ ├── Common/ # Shared services, utilities, and extensions
+│ ├── Contracts/ # Message contracts and DTOs
+│ ├── Database/ # Database migrations and context
+│ ├── MessageProcessor / # Message processing logic (e.g., RabbitMQ consumers)
+│ ├── Models / # Domain models and entities
+│ ├── Tests/ # Integration tests for the WebAPI and MessageProcessor
+│ ├── WebApi/ # ASP.NET Core WebAPI project
+│ └── ... # Future tests: NoSQL, blob storage
 └── .github/ # CI workflows (GitHub Actions + Docker support)
 ```
 
@@ -58,7 +65,7 @@ A curated collection of **.NET 9+** integration test samples — showcasing best
       docker run --name mailpit `
         -p 8025:8025 -p 1025:1025 `
         --restart unless-stopped `         
-        -d axllent/mailpit      
+        -d axllent/mailpit
       ```
 
 1. Use `dotnet test` to run all tests.
