@@ -21,8 +21,7 @@ A curated collection of **.NET 9+** integration test samples — showcasing best
 
 1. **Planned Additions**
     - NoSQL database (e.g., MongoDB)
-    - Blob storage (local or Azure emulator)
-    - Email assertion (via SMTP mock server)
+    - Blob storage (local or Azure emulator)    
 
 ---
 
@@ -56,7 +55,7 @@ A curated collection of **.NET 9+** integration test samples — showcasing best
    1. RabbitMQ:
       ```powershell
       docker run --name rabbitmq `
-        -p 15672:15672 -p 5672:5672 `
+        -p 15672:15672 `
         -d masstransit/rabbitmq
       ``` 
       
@@ -91,7 +90,6 @@ A curated collection of **.NET 9+** integration test samples — showcasing best
 | Email assertion (Inbox mock) | 🟢 Done     |
 | NoSQL DB (e.g., MongoDB)     | 🟡 Upcoming |
 | Blob Storage (emulator)      | 🟡 Upcoming |
-
 
 Contributions welcome! Feel free to submit PRs, feature requests or issues.
 
